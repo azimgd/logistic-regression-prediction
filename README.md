@@ -1,6 +1,7 @@
 # CTR Prediction
 
 ##install and demo
+- `cat redis.model | redis-cli`
 - `npm install`
 - `node lib/index`
 
