@@ -13,6 +13,18 @@ describe('Validate logistic function implementation', () => {
     expect(logistic.isValidNumber(0)).to.be(true);
   });
 
+  it('makes proper summation', () => {
+    expect(logistic.numberSum).to.be.a('function');
+    expect(logistic.numberSum(3, 2)).to.eql(5);
+    expect(logistic.numberSum(7.00001, 31.6312697695436060)).to.eql(38.6312797695436070);
+  });
+
+  it('makes proper division', () => {
+    expect(logistic.numberDiv).to.be.a('function');
+    expect(logistic.numberDiv(3, 2)).to.eql(1.5);
+    expect(logistic.numberDiv(7, 0.2213)).to.eql(31.6312697695436060);
+  });
+
   describe('sums all input arguments', () => {
     const isNotNumberSpy = sinon.spy(() => false);
     const isNumberSpy = sinon.spy(() => true);
