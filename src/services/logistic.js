@@ -12,7 +12,7 @@ export const _sumCoefficients = (isNumeric, sumNumbers) => (bias, ...coeff) => {
   return coeff.filter(isNumeric)
   .reduce(sumNumbers, bias);
 };
-export const sumCoefficients = _sumCoefficients.bind(null, isValidNumber, numberSum);
+export const sumCoefficients = _sumCoefficients(isValidNumber, numberSum);
 
 /**
  * Logistic function implementation
@@ -21,4 +21,4 @@ export const _logisticFunction = (isNumeric, sumNumbers, divideNumbers) => (coef
   if (!isNumeric(coeffSum)) { throw new Error('Coefficient sum must be a number'); }
   return divideNumbers(Math.exp(coeffSum), sumNumbers(Math.exp(coeffSum), 1));
 };
-export const logisticFunction = _logisticFunction.bind(null, isValidNumber, numberSum, numberDiv);
+export const logisticFunction = _logisticFunction(isValidNumber, numberSum, numberDiv);
