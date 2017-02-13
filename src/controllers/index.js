@@ -1,13 +1,13 @@
 import { sumCoefficients, logisticFunction } from '../services/logistic';
 
-export const getIndex = (dataSource, req, res) => {
-  Promise.all([
-    dataSource.getCoefficient('bias'),
-    dataSource.getCoefficient('deviceExtBrowser=Firefox'),
-    dataSource.getCoefficient('bannerExtSize=300x250'),
-    dataSource.getCoefficient('deviceLanguage=de'),
-    dataSource.getCoefficient('deviceExtType=tablet'),
-  ])
+export const postIndex = (dataSource, req, res) => {
+  const tranformedRequest = Object.keys(req.body)
+    .map(item => `${item}=${req.body[item]}`);
+
+  const coefficientsPromise = ['bias', ...tranformedRequest]
+    .map(item => dataSource.getCoefficient(item));
+
+  Promise.all(coefficientsPromise)
   .then(source => source.map(parseFloat))
   .then(coefficients => sumCoefficients(...coefficients))
   .then(logisticFunction)
@@ -15,7 +15,7 @@ export const getIndex = (dataSource, req, res) => {
   .catch(res.json.bind(res));
 };
 
-export const postIndex = () => {
+export const getIndex = () => {
 
 };
 

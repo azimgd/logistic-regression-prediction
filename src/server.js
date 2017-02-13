@@ -1,6 +1,7 @@
 import express from 'express';
 import bluebird from 'bluebird';
 import redis from 'redis';
+import bodyParser from 'body-parser';
 import indexController from './controllers/index';
 import indexSelector from './selectors/index';
 
@@ -14,8 +15,9 @@ export const serverImpl = (server, redisServer, controllers) => ({
     server.post('/', func.postIndex);
   },
 
-  start: (port) => {
+  start: (expressBodyParser, port) => {
     const redisClient = redisServer.createClient();
+    server.use(expressBodyParser.json());
     server.listen(port);
     return { redisClient };
   },
@@ -28,7 +30,7 @@ export const serverProvider = (port) => {
   bluebird.promisifyAll(redis.RedisClient.prototype);
   bluebird.promisifyAll(redis.Multi.prototype);
   const expressServer = serverImpl(express(), redis, indexController);
-  const { redisClient } = expressServer.start(port);
+  const { redisClient } = expressServer.start(bodyParser, port);
   const dataSource = indexSelector(redisClient);
   expressServer.initRoutes(dataSource);
   return {};
