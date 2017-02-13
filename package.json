@@ -1,0 +1,28 @@
+{
+  "name": "es6-starter",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "./node_modules/.bin/babel src -d lib",
+    "dev": "./node_modules/.bin/gulp",
+    "test": "./node_modules/mocha/bin/mocha --compilers js:babel-core/register"
+  },
+  "keywords": [],
+  "author": "Azim Gadzhiagayev <me@azimgd.com> (http://azimgd.com)",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-cli": "^6.22.2",
+    "babel-core": "^6.22.1",
+    "babel-plugin-transform-object-rest-spread": "^6.22.0",
+    "babel-preset-es2015": "^6.22.0",
+    "eslint": "^3.14.0",
+    "eslint-config-airbnb-base": "^11.0.1",
+    "eslint-plugin-import": "^2.2.0",
+    "expect.js": "^0.3.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "mocha": "^3.2.0",
+    "sinon": "^1.17.7"
+  }
+}
