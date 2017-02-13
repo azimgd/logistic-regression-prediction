@@ -5,6 +5,10 @@ import bodyParser from 'body-parser';
 import indexController from './controllers/index';
 import indexSelector from './selectors/index';
 
+// redis client specific transform
+bluebird.promisifyAll(redis.RedisClient.prototype);
+bluebird.promisifyAll(redis.Multi.prototype);
+
 /**
  * Implementation of server object
  */
@@ -27,12 +31,12 @@ export const serverImpl = (server, redisServer, controllers) => ({
  * Server provider could use other instances as well.
  */
 export const serverProvider = (port) => {
-  bluebird.promisifyAll(redis.RedisClient.prototype);
-  bluebird.promisifyAll(redis.Multi.prototype);
-  const expressServer = serverImpl(express(), redis, indexController);
+  const app = express();
+  const expressServer = serverImpl(app, redis, indexController);
   const { redisClient } = expressServer.start(bodyParser, port);
   const dataSource = indexSelector(redisClient);
   expressServer.initRoutes(dataSource);
+  console.log('server is running on port:', port);
   return {};
 };
 
