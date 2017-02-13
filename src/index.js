@@ -1,2 +1,6 @@
-export const app = () => ({});
-export const init = () => ({});
+import server from './server';
+
+const serverInstance = server();
+
+serverInstance.initRoutes();
+serverInstance.start(3000);

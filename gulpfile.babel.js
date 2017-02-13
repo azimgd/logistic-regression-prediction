@@ -1,11 +1,11 @@
 import gulp from 'gulp';
 import babel from 'gulp-babel';
 
-gulp.task('babel', () => {
-  return gulp.src('./src/*.js')
+gulp.task('babel', () =>
+  gulp.src(['./src/*.js', './src/*/*.js'])
     .pipe(babel())
-    .pipe(gulp.dest('./lib'));
-});
+    .pipe(gulp.dest('./lib')),
+);
 
 gulp.task('watch', () => {
   gulp.watch('./src/*.js', ['babel']);
